@@ -21,4 +21,4 @@ for r in channels.rooms:
 #battle.start() #Test
 
 
-channels.sgn.server("127.0.0.1", 5000)
+channels.sgn.server("", 5000)
