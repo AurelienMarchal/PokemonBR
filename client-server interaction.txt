@@ -1,0 +1,18 @@
+c: client, s: server, bc : broadcast to all clients, oc: other clients, rc: clients in the same room
+--- CONNEXION ---
+@connect    s->c : {'id': 0}
+--- MESSAGE ---
+@message 	c->s : {'id': 0', 'message': "hello world"}
+@message 	s->bc: {'username': 'michel', 'message': "hello world"}
+--- MOVEMENT ---
+@movement 	c->s : {'id': 0,'username': 'michel','room': 'room_House1', 'move-x': 0, 'move-y': 0, 'state': 0, 'dir': 0, 'x': 20, 'y': 20, 'sprite': 'boy'}
+@room_data	s->c : {'players': [{'id': 1, 'username': 'christian' ,'move-x': 0, 'move-y': 0, 'x': 20, 'y': 20, 'dir': 1, 'sprite': 'boy', 'state': 0}]
+--- CHANGEROOM ---
+@change_roomc->s : {'id': 0, 'old_room': None}
+@movement 	c->s : {'id': 0,'username': 'michel','room': 'room_House1', 'move-x': 0, 'move-y': 0, 'state': 0, 'dir': 0, 'x': 20, 'y': 20, 'sprite': 'boy'}
+--- BATTLEDATA ---
+@battle     s->c : {'data_id': 0,   'ally_side':        {'pokemons': [{'slot': 0, 'hp_max': 10, 'hp': 10, 'status': 0, other_statuts:[{}]}]},
+                                    'oppenent_side' :   {'pokemons': []},
+                                    'battle': {'turn': 0 }}
+
+
