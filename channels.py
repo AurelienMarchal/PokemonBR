@@ -6,7 +6,7 @@ import room
 iden = 0
 rooms = []
 
-
+#lol
 def find_room(room_id):
     global rooms
     for r in rooms:
