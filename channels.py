@@ -35,7 +35,7 @@ def message(c, addr, data):
 
 @sgn.channel("movement")
 def movement(c, addr, data):
-    #print("Receiving movement :", data)
+    print("Receiving movement :", data)
     data = json.loads(data)
     r = find_room(data['room'])
     if r is not None:
