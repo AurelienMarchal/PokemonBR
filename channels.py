@@ -40,7 +40,7 @@ def message(c, addr, data):
 @sgn.channel("movement")
 def movement(c, addr, data):
     data = json.loads(data)
-    verify_id(c, data[id])
+    verify_id(c, data['id'])
     print("Receiving movement :", data)
     player = sgn.callvariable('player', c)
     player.update_movement()
@@ -49,7 +49,7 @@ def movement(c, addr, data):
 @sgn.channel("leave_room")
 def leave_room(c, addr, data):
     data = json.loads(data)
-    verify_id(c, data[id])
+    verify_id(c, data['id'])
     r = find_room(data['room'])
     player = sgn.callvariable('player', c)
     print("Player ", player, "is leaving", data['room'])
@@ -59,7 +59,7 @@ def leave_room(c, addr, data):
 @sgn.channel("enter_room")
 def enter_room(c, addr, data):
     data = json.loads(data)
-    verify_id(c, data[id])
+    verify_id(c, data['id'])
     r = find_room(data['room'])
     player = sgn.callvariable('player', c)
     print("Player", player, "is entering", data['room'])
@@ -70,7 +70,7 @@ def enter_room(c, addr, data):
 @sgn.channel("update_data")
 def update_data(c, addr, data):
     data = json.loads(data)
-    verify_id(c, data[id])
+    verify_id(c, data['id'])
 
     for _item in data:
         if _item != 'id':
