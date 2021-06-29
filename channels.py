@@ -1,12 +1,14 @@
 import suspengine as sgn
 import json
 import room
-
+from player import Player
 
 iden = 0
 rooms = []
 
-#lol
+def verify_id(client, _id):
+    assert sgn.callvariable('id', client) == _id, f"No client with id {_id}"
+
 def find_room(room_id):
     global rooms
     for r in rooms:
@@ -20,6 +22,8 @@ def connect(c, addr):
     global iden
     sgn.savevariable('id', iden, c)
     sgn.emit("connect", {'id': int(iden)}, c)
+    player = Player(iden)
+    sgn.savevariable('player', player, c)
     iden += 1
 
 
@@ -35,21 +39,44 @@ def message(c, addr, data):
 
 @sgn.channel("movement")
 def movement(c, addr, data):
+    data = json.loads(data)
+    verify_id(c, data[id])
     print("Receiving movement :", data)
+    player = sgn.callvariable('player', c)
+    player.update_movement()
+
+
+@sgn.channel("leave_room")
+def leave_room(c, addr, data):
     data = json.loads(data)
+    verify_id(c, data[id])
     r = find_room(data['room'])
+    player = sgn.callvariable('player', c)
+    print("Player ", player, "is leaving", data['room'])
     if r is not None:
-        r.movement(data)
+        r.remove_player(player)
 
-
-@sgn.channel("change_room")
-def change_room(c, addr, data):
+@sgn.channel("enter_room")
+def enter_room(c, addr, data):
     data = json.loads(data)
-    r_old = find_room(data['old_room'])
-    print("Player with id", data['id'], "is leaving", data['old_room'])
-    if r_old is not None:
-        r_old.remove_player(data['id'])
+    verify_id(c, data[id])
+    r = find_room(data['room'])
+    player = sgn.callvariable('player', c)
+    print("Player", player, "is entering", data['room'])
+    if r is not None:
+        r.add_player(player)
 
+"""
+@sgn.channel("update_data")
+def update_data(c, addr, data):
+    data = json.loads(data)
+    verify_id(c, data[id])
+
+    for _item in data:
+        if _item != 'id':
+            sgn.savevariable('id', _item, c)
+    
+"""
 @sgn.channel("battle")
 def battle(c, addr, data):
         pass

@@ -55,7 +55,8 @@ def emit(event,message,client):
     tempdata[event] = message
     tempdata['identify'] = event
     message = json.dumps(tempdata)+splitter
-    #print("Sending", message)
+    
+    print("Sending", message)
     try:
         client.send(message.encode('utf-8'))
     except:

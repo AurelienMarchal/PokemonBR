@@ -14,31 +14,24 @@ class Room(Thread):
     def run(self):
         while True:
             if len(self.players) > 0:
-                self.emit_to_players_in_room("room_data", {'players': self.players})
+                #A modif
+                #self.emit_to_players_in_room("room_data", {'players': self.players})
                 time.sleep(self.WAITING_TIME)
 
     def emit_to_players_in_room(self, channel, data):
         for player in self.players:
             try:
-                c = sgn.callvariablelist('id', player['id'])[0]
+                c = sgn.callvariablelist('id', player.id_)[0]
                 sgn.emit(channel, data, c)
             except IndexError:
                 pass
 
-    def movement(self, data):
-        for p in self.players:
-            if p['id'] == data['id']:
-                self.players.remove(p)
-                self.players.append(data)
-                return True
-        self.add_player(data)
+    def add_player(self, player):
+        self.players.append(player)
+        player.set_room(self)
 
-    def add_player(self, data):
-        self.players.append(data)
+    def remove_player(self, player):
+        self.players.remove(player)
+        player.set_room(None)
+        self.emit_to_players_in_room("room_data_remove_player", {'id' : player.id_})
 
-    def remove_player(self, id_):
-        for p in self.players:
-            if p['id'] == id_:
-                self.players.remove(p)
-                self.emit_to_players_in_room("room_data_remove_player", {'id' : id_})
-                return(p)

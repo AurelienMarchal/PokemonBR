@@ -1,6 +1,6 @@
 import channels
-import BattleSystem.battle as battle
-import BattleSystem.test as test
+#import BattleSystem.battle as battle
+#import BattleSystem.test as test
 
 
 #STARTING SERVER
