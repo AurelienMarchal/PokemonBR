@@ -43,7 +43,7 @@ def movement(c, addr, data):
     verify_id(c, data['id'])
     print("Receiving movement :", data)
     player = sgn.callvariable('player', c)
-    player.update_movement()
+    player.update_movement(data)
 
 
 @sgn.channel("leave_room")
