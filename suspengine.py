@@ -29,8 +29,8 @@ class User:
             return None
     
     @classmethod
-    def find_user(client):
-        for user in User.userlist:
+    def find_user(cls, client):
+        for user in cls.userlist:
             if user.client == client:
                 return user
         
