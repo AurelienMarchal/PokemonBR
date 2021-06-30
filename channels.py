@@ -30,6 +30,8 @@ def connect(c, addr):
 @sgn.channel("disconnect")
 def disconnect(c, addr):
     print("Client with id :", sgn.callvariable('id', c), "disconnected from the server")
+    player = sgn.callvariable('player', c)
+    player.leave_room()
 
 
 @sgn.channel("message")

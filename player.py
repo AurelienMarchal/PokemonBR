@@ -51,3 +51,7 @@ class Player:
 
         self.room.emit_to_players_in_room("movement", 
             self.get_data_from_keys(['x_grid', 'y_grid', 'state', 'dir']))
+
+    
+    def leave_room(self):
+        self.room.remove_player(self)
