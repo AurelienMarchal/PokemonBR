@@ -66,7 +66,9 @@ def enter_room(c, addr, data):
     player = sgn.callvariable('player', c)
     print("Player", player, "is entering", data['room'])
     if r is not None:
+        player.update_movement(data)
         r.add_player(player)
+        
 
 
 """
