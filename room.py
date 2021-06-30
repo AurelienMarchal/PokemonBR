@@ -58,5 +58,5 @@ class Room(Thread):
         
         for player in self.players:
             if player != player_reciever:
-                sgn.emit("player_data", player.data_to_dict, c)
+                sgn.emit("player_data", player.data_to_dict(), c)
         
