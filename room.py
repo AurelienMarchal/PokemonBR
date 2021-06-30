@@ -17,7 +17,7 @@ class Room(Thread):
                 #A modif
                 #self.emit_to_players_in_room("room_data", {'players': self.players})
 
-                print(self.room_id , ":", self.players)
+                print(self.room_id , ":", len(self.players), 'players active.')
                 time.sleep(self.WAITING_TIME)
 
     def emit_to_players_in_room(self, channel, data):
