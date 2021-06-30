@@ -4,7 +4,7 @@ import suspengine as sgn
 
 
 class Room(Thread):
-    WAITING_TIME = 0.01
+    WAITING_TIME = 1
     def __init__(self, room_id):
         Thread.__init__(self)
 
@@ -16,6 +16,8 @@ class Room(Thread):
             if len(self.players) > 0:
                 #A modif
                 #self.emit_to_players_in_room("room_data", {'players': self.players})
+
+                print(self.players)
                 time.sleep(self.WAITING_TIME)
 
     def emit_to_players_in_room(self, channel, data):
