@@ -66,6 +66,7 @@ def enter_room(c, addr, data):
     if r is not None:
         r.add_player(player)
 
+
 """
 @sgn.channel("update_data")
 def update_data(c, addr, data):

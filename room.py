@@ -27,11 +27,36 @@ class Room(Thread):
                 pass
 
     def add_player(self, player):
+        # Add player to the list
         self.players.append(player)
+
+        # Modify the player data with this room
         player.set_room(self)
 
-    def remove_player(self, player):
-        self.players.remove(player)
-        player.set_room(None)
-        self.emit_to_players_in_room("room_data_remove_player", {'id' : player.id_})
+        # Send the new player data to all the players already in the room
+        self.emit_to_players_in_room('player_data', player.data_to_dict())
 
+        # Send to the new player the data from all the players already in the room
+        self.send_other_players_data(player)
+
+    def remove_player(self, player):
+        # Remove player from the list
+        self.players.remove(player)
+
+        # Reset room of player
+        player.set_room(None)
+
+        # Send to all player left in the room that the player left
+        self.emit_to_players_in_room("remove_player", {'id' : player.id_})
+        
+
+    def send_other_players_data(self, player_reciever):
+        try:
+            c = sgn.callvariablelist('id', player_reciever.id_)[0]
+        except IndexError:
+            pass
+        
+        for player in self.players:
+            if player != player_reciever:
+                sgn.emit("player_data", player.data_to_dict, c)
+        

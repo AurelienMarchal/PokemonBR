@@ -7,6 +7,7 @@ class Player:
         y_grid = 0, 
         state = 0, 
         dir = 0,
+        sprite = "boy",
         room = None) -> None:
 
         self.id_ = id_
@@ -15,6 +16,7 @@ class Player:
         self.y_grid = y_grid
         self.state = state
         self.dir = dir
+        self.sprite = sprite
         self.room = room
     
     def data_to_dict(self):
@@ -25,7 +27,8 @@ class Player:
             'y_grid': self.y_grid,
             'state': self.state,
             'dir': self.dir,
-            'room': self.room
+            'sprite': self.sprite,
+            'room': self.room.room_id
         }
     
     def get_data_from_keys(self, keys):
