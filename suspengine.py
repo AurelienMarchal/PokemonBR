@@ -2,10 +2,9 @@ import socket
 import threading
 import json
 
-userdata = {}
 clientlist = []
 userevents = {}
-userdata = {}
+
 use = {}
 prev = {}
 limit = False
@@ -13,20 +12,47 @@ defaultlimit = 4096
 debug = True
 splitter = "[{//V//}]"
 
+class User:
+    userlist = []
+    def __init__(self, client) -> None:
+        self.client = client
+        self.userdata = {}
+    
 
-def savevariable(name,data,client):
-    global userdata
-    userdata[str(client)][name] = data
-
-
-def callvariable(name,client):
-    global userdata
-    if name in userdata[str(client)]:
-        return userdata[str(client)][name]
-    else:
+    def save_variable(self, name, data):
+        self.userdata[name] = data
+    
+    def call_variable(self, name):
+        if name in self.userdata:
+            return self.userdata[name]
+        else:
+            return None
+    
+    @classmethod
+    def find_user(client):
+        for user in User.userlist:
+            if user.client == client:
+                return user
+        
         return None
 
 
+
+def savevariable(name, data, client):
+
+    user = User.find_user(client)
+    if user is not None:
+        user.save_variable(name, data)
+        
+
+
+def callvariable(name, client):
+    user = User.find_user(client)
+    if user is not None:
+        return user.call_variable(name)
+
+
+"""
 def callvariablelist(name,data):
     global userdata
     global clientlist
@@ -36,7 +62,7 @@ def callvariablelist(name,data):
             if userdata[str(c)][name] == data:
                 templist.append(c)
     return templist
-
+"""
 
 def addfunc(event,func):
     global use
@@ -162,7 +188,8 @@ def server(host,port,**kwargs):
         c, addr = s.accept()
         clientlist.append(c)
         threading.Thread(target=handleclient,args=[c,addr]).start()
-        userdata[str(c)] = {}
+        user = User(c)
+        User.userlist.append(user)
         prev[str(c)] = ""
         print(str(addr[0]) + " Connected To The Server From Port " + str(addr[1]))
         if 'connect' in use:
