@@ -73,7 +73,6 @@ def broadcast(event,message):
         c.send(message.encode('utf-8'))
 
 def disconnect(client):
-    print("Client with id :", callvariable('id', client), "disconnected from the server")
     client.close()
 
 def handleclient(c,addr):
