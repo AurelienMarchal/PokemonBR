@@ -36,6 +36,14 @@ class User:
         
         return None
 
+    @classmethod
+    def find_clients(cls, name, data):
+        templist = []
+        for user in cls.userlist:
+            if name in user.userdata:
+                if user.userdata[name] == data:
+                    templist.append(user.client)
+
 
 
 def savevariable(name, data, client):
@@ -52,17 +60,10 @@ def callvariable(name, client):
         return user.call_variable(name)
 
 
-"""
+
 def callvariablelist(name,data):
-    global userdata
-    global clientlist
-    templist = []
-    for c in clientlist:
-        if name in userdata[str(c)]:
-            if userdata[str(c)][name] == data:
-                templist.append(c)
-    return templist
-"""
+    return User.find_clients(name, data)
+
 
 def addfunc(event,func):
     global use
