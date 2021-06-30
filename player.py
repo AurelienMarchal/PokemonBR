@@ -49,8 +49,9 @@ class Player:
         self.state = mvt_data['state']
         self.dir = mvt_data['dir']
 
-        self.room.emit_to_players_in_room("movement", 
-            self.get_data_from_keys(['x_grid', 'y_grid', 'state', 'dir']))
+        if self.room is not None:
+            self.room.emit_to_players_in_room("movement", 
+                self.get_data_from_keys(['x_grid', 'y_grid', 'state', 'dir']))
 
     
     def leave_room(self):
