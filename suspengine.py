@@ -55,7 +55,7 @@ def emit(event,message,client):
     tempdata[event] = message
     tempdata['identify'] = event
     message = json.dumps(tempdata)+splitter
-    
+
     print("Sending", message)
     try:
         client.send(message.encode('utf-8'))
@@ -71,7 +71,9 @@ def broadcast(event,message):
     message = json.dumps(tempdata)+splitter
     for c in clientlist:
         c.send(message.encode('utf-8'))
+
 def disconnect(client):
+    print("Client with id :", callvariable('id', client), "disconnected from the server")
     client.close()
 
 def handleclient(c,addr):
