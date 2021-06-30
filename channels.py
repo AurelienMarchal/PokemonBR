@@ -30,7 +30,7 @@ def connect(c, addr):
 @sgn.channel("disconnect")
 def disconnect(c, addr):
     print(sgn.userdata)
-    #print("Client with id :", sgn.callvariable('id', c), "disconnected from the server")
+    print("Client with id :", sgn.callvariable('id', c), "disconnected from the server")
     pass
 
 
