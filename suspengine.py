@@ -43,6 +43,8 @@ class User:
             if name in user.userdata:
                 if user.userdata[name] == data:
                     templist.append(user.client)
+        
+        return templist
 
 
 
